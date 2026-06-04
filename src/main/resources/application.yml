@@ -1,0 +1,45 @@
+server:
+  port: ${SERVER_PORT:8054}
+
+spring:
+  application:
+    name: MachineData-Service
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:10.1.40.171:9092}
+    consumer:
+      enable-auto-commit: false
+      auto-offset-reset: latest
+
+iotdb:
+  host: ${IOTDB_HOST:127.0.0.1}
+  port: ${IOTDB_PORT:6667}
+  username: ${IOTDB_USERNAME:root}
+  password: ${IOTDB_PASSWORD:root}
+  database: ${IOTDB_DATABASE:root.test}
+  max-size: ${IOTDB_POOL_MAX_SIZE:10}
+  fetch-size: ${IOTDB_FETCH_SIZE:1000}
+  connection-timeout-in-ms: ${IOTDB_CONNECTION_TIMEOUT_MS:10000}
+  enable-redirection: ${IOTDB_ENABLE_REDIRECTION:false}
+
+machine:
+  redis:
+    enabled: ${MACHINE_REDIS_ENABLED:false}
+    address: ${MACHINE_REDIS_ADDRESS:redis://127.0.0.1:6379}
+    database: ${MACHINE_REDIS_DATABASE:0}
+    password: ${MACHINE_REDIS_PASSWORD:}
+  kafka:
+    consumer:
+      enabled: ${MACHINE_KAFKA_CONSUMER_ENABLED:true}
+      concurrency: ${MACHINE_KAFKA_CONSUMER_CONCURRENCY:1}
+      group-id: ${MACHINE_KAFKA_CONSUMER_GROUP_ID:machine-data-service}
+      topics:
+        - ${MACHINE_KAFKA_TOPIC:test-topic}
+      idempotency:
+        enabled: ${MACHINE_KAFKA_IDEMPOTENCY_ENABLED:true}
+        key-prefix: ${MACHINE_KAFKA_IDEMPOTENCY_KEY_PREFIX:kafka:idempotent:}
+        processing-ttl-seconds: ${MACHINE_KAFKA_IDEMPOTENCY_PROCESSING_TTL_SECONDS:600}
+        done-ttl-hours: ${MACHINE_KAFKA_IDEMPOTENCY_DONE_TTL_HOURS:72}
+
