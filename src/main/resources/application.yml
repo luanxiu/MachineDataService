@@ -8,7 +8,7 @@ spring:
     exclude:
       - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
   kafka:
-    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:10.1.40.171:9092}
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:10.10.24.102:19092,10.10.24.102:19093}
     consumer:
       enable-auto-commit: false
       auto-offset-reset: latest
@@ -36,10 +36,9 @@ machine:
       concurrency: ${MACHINE_KAFKA_CONSUMER_CONCURRENCY:1}
       group-id: ${MACHINE_KAFKA_CONSUMER_GROUP_ID:machine-data-service}
       topics:
-        - ${MACHINE_KAFKA_TOPIC:test-topic}
+        - ${MACHINE_KAFKA_TOPIC:machine-data-64chan}
       idempotency:
         enabled: ${MACHINE_KAFKA_IDEMPOTENCY_ENABLED:true}
         key-prefix: ${MACHINE_KAFKA_IDEMPOTENCY_KEY_PREFIX:kafka:idempotent:}
         processing-ttl-seconds: ${MACHINE_KAFKA_IDEMPOTENCY_PROCESSING_TTL_SECONDS:600}
         done-ttl-hours: ${MACHINE_KAFKA_IDEMPOTENCY_DONE_TTL_HOURS:72}
-
